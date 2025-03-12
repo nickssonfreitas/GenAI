@@ -2,8 +2,25 @@
 
 Welcome to **GenAI**, a project focused on **Generative AI**, utilizing advanced LLM and RAG models. This repository provides everything you need to quickly set up a professional development environment.
 
-## 📌 Requirements
+# Project 01. ChatBot - Personal Assistant
 
+## 📌 **Objective**
+The ChatBot aims to be a personal assistant, providing users with an interactive tool to ask questions and obtain general information quickly and efficiently.
+
+## 🎯 **Target Audience**
+The target audience consists of users looking for a virtual assistant to ask questions and receive answers on various topics in an intuitive manner.
+
+## 🔄 **Interaction Model**
+The interaction model is based on a **question-and-answer** system, where users can submit queries to the ChatBot, and it will provide responses based on its pre-trained knowledge.
+
+## 🧠 **AI Model**
+The ChatBot uses a **pre-trained model** available on Hugging Face. This project employs a model that runs **locally on the machine**, without requiring an external API for inference, ensuring fast and efficient responses.
+
+**Chosen Model:**
+- **Pre-trained Model:** [Mistral-7B-Instruct](https://huggingface.co/mistralai/Mistral-7B-Instruct) (or another available model from Hugging Face of your choice).
+
+
+## 📌 Requirements
 Before starting, make sure you have the following installed:
 
 - **WSL (if on Windows)**
@@ -30,6 +47,7 @@ cd genai
 
 ### 🔹 **2. Install Dependencies**
 ```bash
+poetry env use python3.11
 poetry install
 ```
 
