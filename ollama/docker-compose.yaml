@@ -1,0 +1,27 @@
+services:
+  # Serviço Ollama para rodar modelos locais
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
+  # Interface Web para interagir com o Ollama
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:latest
+    restart: always
+    ports:
+      - "3000:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - openwebui-data:/app/backend/data
+    depends_on:
+      - ollama
+
+volumes:
+  ollama-data:
+  openwebui-data:
