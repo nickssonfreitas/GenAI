@@ -4,24 +4,24 @@ services:
     image: ollama/ollama:latest
     container_name: ollama
     restart: unless-stopped
+    tty: true
+    volumes:
+      - /home/nicksson/app/ollama-data:/root/.ollama
+      - ./install-ollama-models.sh:/usr/local/bin/install-ollama-models.sh
+    pull_policy: always
     ports:
       - "11434:11434"
-    volumes:
-      - ollama-data:/root/.ollama
-
-  # Interface Web para interagir com o Ollama
   openwebui:
     image: ghcr.io/open-webui/open-webui:latest
-    restart: always
+    container_name: openwebui
+    restart: unless-stopped
     ports:
       - "3000:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - openwebui-data:/app/backend/data
+      - /home/nicksson/app/open-webui-data:/app/backend/data
     depends_on:
       - ollama
-
-volumes:
-  ollama-data:
-  openwebui-data:
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
