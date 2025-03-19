@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - /home/nicksson/app/ollama-data:/root/.ollama
+      - /home/nicksson/app/ollama:/root/.ollama
       - ./install-ollama-models.sh:/usr/local/bin/install-ollama-models.sh
     pull_policy: always
     ports:
@@ -20,7 +20,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - /home/nicksson/app/open-webui-data:/app/backend/data
+      - /home/nicksson/app/open-webui:/app/backend/data
     depends_on:
       - ollama
     environment:
