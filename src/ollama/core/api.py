@@ -1,7 +1,7 @@
 import requests
 import json
 
-def generate_response(prompt, model="llama3.2", url="http://localhost:11434/api/generate"):
+def generate_response(prompt, model="llama3.2", url="http://localhost:11434/api/generate", stream=False, return_json=True):
     """
     Envia um prompt para a API do Ollama e retorna a resposta do modelo.
     
@@ -12,13 +12,17 @@ def generate_response(prompt, model="llama3.2", url="http://localhost:11434/api/
     """
     payload = {
         "model": model,
-        "prompt": prompt
+        "prompt": prompt,
+         "stream": stream
     }
     
     headers = {"Content-Type": "application/json"}
     response = requests.post(url, data=json.dumps(payload), headers=headers)
     
     if response.status_code == 200:
-        return response.json()
+        if return_json:
+            return response.json()
+        else:
+            response
     else:
         return {"error": f"Request failed with status code {response.status_code}", "details": response.text}
