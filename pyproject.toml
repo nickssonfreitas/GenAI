@@ -1,106 +1,14 @@
-[tool.poetry]
+[project]
 name = "genai"
-version = "0.0.1"
-description = "Generative AI Projects"
-authors = ["Nicksson Freitas <nickssonarrais@gmail.com>"]
-license = "MIT"
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
-repository = "https://github.com/nickssonfreitas/genai"
-homepage = "https://nickssonfreitas.github.io/genai"  # Link para documentação
-packages = [
-    { include = "ollama", from = "src" },
-    { include = "sentiment_analysis", from = "src" }
+requires-python = ">=3.11"
+dependencies = [
+    "jupyter>=1.1.1",
+    "ollama>=0.4.8",
+    "pandas>=2.2.3",
+    "ruff>=0.11.6",
+    "torch>=2.6.0",
+    "transformers>=4.51.3",
 ]
-
-
-[tool.poetry.dependencies]
-python = "^3.11.0"
-torch = "^2.2.0"
-transformers = "^4.38.2"
-langchain = "^0.1.0"
-llama-index = "^0.9.0"
-openai = "^1.2.0"
-faiss-cpu = { version = "^1.7.4", markers = "sys_platform == 'linux'" }
-sentence-transformers = "^2.3.0"
-numpy = "^1.26.0"
-pandas = "^1.5.3"
-tqdm = "^4.64.1"
-fastapi = "^0.115.11"
-uvicorn = "^0.34.0"
-python-dotenv = "^1.0.1"
-gradio = "^5.20.1"
-ruff = "^0.9.10"
-ollama = "^0.4.7"
-sentencepiece = "^0.2.0"
-huggingface-hub = "^0.29.3"
-ipywidgets = "^8.1.5"
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-black = "^23.1.0"
-mypy = "^1.1.1"
-pre-commit = "^3.6.0"
-isort = "^5.12.0"
-jupyterlab = "^4.0.0"
-pytest-mock = "^3.14.0"
-python-dotenv = "^1.0.1"
-
-[tool.black]
-line-length = 88
-target-version = ['py311']
-skip-string-normalization = true
-exclude = '''
-    /(
-        | migrations
-        | venv
-        | .venv
-        | build
-        | dist
-    )/
-'''
-
-[tool.ruff]
-line-length = 88
-target-version = "py311"
-extend-select = ["C901"]
-
-[tool.ruff.lint]
-select = [
-    "E",  # Erros do Pyflakes
-    "F",  # Erros do Pyflakes
-    "I",  # Importações desorganizadas
-    "B",  # Boas práticas do flake8-bugbear
-    "PL", # Padrões do Pylint
-    "UP", # Melhorias de código
-]
-ignore = [
-    "B008", # Evita usar `function` diretamente como argumento
-    "PLR0913", # Permite mais de 5 argumentos por função
-]
-
-[tool.isort]
-profile = "black"
-line_length = 88
-multi_line_output = 3
-
-[tool.mypy]
-python_version = "3.11"
-ignore_missing_imports = true
-strict = true
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_any_generics = true
-
-[tool.pytest.ini_options]
-addopts = "-ra -q"
-testpaths = ["tests"]
-
-[tool.poetry.scripts]
-test = "pytest tests"
-format = "black ."
-lint = "ruff check ."
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

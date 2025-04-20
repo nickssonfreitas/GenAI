@@ -25,15 +25,8 @@ Before starting, make sure you have the following installed:
 
 - **WSL (if on Windows)**
 - **Python 3.11+**
-- **Poetry** (Dependency management)
+- **uv** (Dependency management)
 - **Git** (To clone the repository)
-
-If you haven't set up your environment yet, run this script to install everything automatically on WSL:
-```bash
-wget https://raw.githubusercontent.com/nickssonfreitas/genai/main/scripts/install-pyenv.sh
-chmod +x scripts/install-pyenv.sh
-./scripts/install-pyenv.sh
-```
 
 ---
 
@@ -46,28 +39,80 @@ cd genai
 ```
 
 ### 🔹 **2. Install Dependencies**
+Use o script para configurar o ambiente virtual e instalar as dependências:
 ```bash
-poetry env use python3.11
-poetry install
-```
-
-### 🔹 **3. Activate the Virtual Environment**
-```bash
-poetry shell
+make venv-install
 ```
 
 ---
 
 ## 🚀 Running the Project
 
-After activating the virtual environment, you can run the project with:
+### 🔹 **1. Configure the `.env` File**
+Crie o arquivo `.env` com base no exemplo:
 ```bash
-poetry run python main.py
+make env
+```
+Edite o arquivo `.env` para ajustar as configurações, como portas e caminhos de volumes.
+
+
+### 🔹 **2. Build and Run the Docker Containers**
+Construa e inicie os serviços Docker:
+```bash
+make start
 ```
 
-If the project has an entry point configured in `pyproject.toml`, you can run:
+### 🔹 **3. Install the AI Models**
+Baixe e configure os modelos de IA necessários:
 ```bash
-poetry run genai
+make install-models
+```
+
+### 🔹 **4. Access the Application**
+A aplicação estará disponível em:
+```
+http://localhost:3000
+```
+
+### 🔹 **5. Useful Commands**
+- Parar os containers:
+  ```bash
+  make stop
+  ```
+- Limpar containers e volumes:
+  ```bash
+  make clean
+  ```
+- Ver logs do container Ollama:
+  ```bash
+  make logs-ollama
+  ```
+- Ver logs do container OpenWebUI:
+  ```bash
+  make logs-openwebui
+  ```
+
+---
+
+## 🚀 Running the Project with Python
+
+Se preferir rodar o projeto diretamente com Python, siga os passos abaixo:
+
+### 🔹 **1. Ative o Ambiente Virtual**
+Ative o ambiente virtual criado:
+```bash
+source .venv/bin/activate
+```
+
+### 🔹 **2. Execute o Projeto**
+Rode o projeto diretamente:
+```bash
+uv run python main.py
+```
+
+Se o projeto tiver um ponto de entrada configurado no `pyproject.toml`, você pode rodar:
+```bash
+uv run genai
 ```
 
 ---
@@ -78,60 +123,25 @@ This project is configured with **linting, formatting, and automated testing** t
 
 ### ✅ **Run Linter and Auto-Fix**
 ```bash
-poetry run ruff check .
-poetry run black .
-poetry run isort .
+uv lint
+uv format
 ```
 
 ### ✅ **Run Static Typing with `mypy`**
 ```bash
-poetry run mypy .
+uv typecheck
 ```
 
 ### ✅ **Run Tests**
 ```bash
-poetry run pytest
+uv test
 ```
 
 ### ✅ **Set Up `pre-commit` (Auto-check before committing)**
 ```bash
-poetry run pre-commit install
+uv pre-commit install
 ```
 Now, every time you make a `git commit`, all tools will run automatically.
-
----
-
-## 📚 Publishing to PyPI (Optional)
-
-If you want to publish your package on **PyPI**, follow these steps:
-
-### 🔹 **1. Create a PyPI Account**
-Register at [https://pypi.org/account/register/](https://pypi.org/account/register/).
-
-### 🔹 **2. Generate an API Token**
-Create an API token at [https://pypi.org/manage/account/token/](https://pypi.org/manage/account/token/).
-
-### 🔹 **3. Configure Poetry**
-```bash
-poetry config pypi-token.pypi YOUR_TOKEN_HERE
-```
-
-### 🔹 **4. Build the Package**
-```bash
-poetry build
-```
-
-### 🔹 **5. Publish to PyPI**
-```bash
-poetry publish
-```
-
-Now, anyone can install your package with:
-```bash
-pip install genai
-```
-
----
 
 ## 📝 Project Structure
 
@@ -180,7 +190,7 @@ genai/
 ## 🛠 Technologies Used
 
 - **Python 3.11**
-- **Poetry** (Dependency Management)
+- **uv** (Dependency Management)
 - **LangChain** (LLMs and Agents)
 - **Transformers** (AI Models)
 - **PyTorch** (Deep Learning Framework)

@@ -1,0 +1,27 @@
+services:
+  # Serviço Ollama para rodar modelos locais
+  ollama:
+    image: ${OLLAMA_IMAGE}
+    container_name: ${OLLAMA_CONTAINER_NAME}
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ../scripts/install-ollama-models.sh:/install-ollama-models.sh
+      - ${OLLAMA_LOCAL_DATA_VOLUME}:/root/.ollama
+    pull_policy: always
+    ports:
+      - "${OLLAMA_PORT}:11434"
+  openwebui:
+    image: ${OPENWEBUI_IMAGE}
+    container_name: ${OPENWEBUI_CONTAINER_NAME}
+    restart: unless-stopped
+    ports:
+      - "${OPENWEBUI_PORT}:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${OPENWEBUI_DATA_VOLUME}:/app/backend/data
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
