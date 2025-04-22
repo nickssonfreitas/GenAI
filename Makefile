@@ -47,7 +47,7 @@ shell-openwebui:
 
 # Forçar a instalação dos modelos no container Ollama
 install-models:
-	docker exec -it $(OLLAMA_CONTAINER_NAME) bash /usr/local/bin/install-ollama-models.sh
+	docker exec -it $(OLLAMA_CONTAINER_NAME) bash install-ollama-models.sh
 
 # ==========================
 # Comandos Ambiente Virtual
@@ -55,13 +55,11 @@ install-models:
 
 # Instalar o ambiente virtual
 venv-install:
-	bash scripts/install-venv-with-uv
+	bash scripts/install-venv-with-uv.sh
 	$(VENV)/bin/pip install --upgrade pip
 	$(VENV)/bin/pip install .
-
-# Ativar o ambiente virtual
-venv-activate:
-	@echo "Execute 'source $(VENV)/bin/activate' para ativar o ambiente virtual."
+	@echo "Para ativar o ambiente virtual, execute o seguinte comando no terminal:"
+	@echo "source $(VENV)/bin/activate"
 
 # ==========================
 # Comandos Auxiliares
